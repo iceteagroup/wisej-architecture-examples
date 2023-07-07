@@ -103,18 +103,38 @@ namespace Wisej.Architecture.MVC
 			// Read the existing JSON file content
 			string existingJson = File.ReadAllText(jsonFilePath);
 
-			// Deserialize the existing JSON into a list of StudentModel objects
-			// NOTE: This line causes an error if the file is empty or does not contain at least 1 StudentModel object
-			List<StudentModel> students = JsonConvert.DeserializeObject<List<StudentModel>>(existingJson);
+			List<StudentModel> students = new List<StudentModel>();
+			try
+			{
+				// Deserialize the existing JSON into a list of StudentModel objects
+				// NOTE: This line causes an error if the file is empty or does not contain at least 1 StudentModel object
+				students = JsonConvert.DeserializeObject<List<StudentModel>>(existingJson);
 
-			// Add the new StudentModel object to the list
-			students.Add(newStudent);
+				// Add the new StudentModel object to the list
+				students.Add(newStudent);
 
-			// Serialize the updated list of StudentModel objects to JSON
-			string updatedJson = JsonConvert.SerializeObject(students, Formatting.Indented);
+			}
+			// If there are issues reading the student data from the JSON file, Create a new list containing the new student
+			//catch exception that happens when the file has invalid JSON formatting
+			catch (JsonSerializationException ex)
+			{
+				students = new List<StudentModel>();
+				students.Add(this);
+			}
+			//catch exception that happens when the file is blank
+			catch(NullReferenceException ex)
+			{
+				students = new List<StudentModel>();
+				students.Add(this);
+			}
+			finally
+			{
+				// Serialize the updated list of StudentModel objects to JSON
+				string updatedJson = JsonConvert.SerializeObject(students, Formatting.Indented);
 
-			// Overwrite the existing JSON file with the updated JSON
-			File.WriteAllText(jsonFilePath, updatedJson);
+				// Overwrite the existing JSON file with the updated JSON
+				File.WriteAllText(jsonFilePath, updatedJson);
+			}
 		}
 	}
 }
