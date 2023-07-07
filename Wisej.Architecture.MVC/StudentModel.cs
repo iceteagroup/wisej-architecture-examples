@@ -1,9 +1,13 @@
 ﻿using Dapper;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
+using Wisej.Web;
 
 namespace Wisej.Architecture.MVC
 {
@@ -42,6 +46,9 @@ namespace Wisej.Architecture.MVC
 		}
 
 		// Looks up the database connection string. The database connection string is stored in Web.config.
+		// In this case, the database connection string is just a the name of a JSON file.
+		// If the database was a SQL server instead os a JSON file, the database connection string would look something like this:
+		// Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=StudentData;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
 		public static string CnnVal(string name)
 		{
 			return ConfigurationManager.ConnectionStrings[name].ConnectionString;
@@ -50,7 +57,7 @@ namespace Wisej.Architecture.MVC
 		// returns a list of StudentModel objects from the database
 		public static List<StudentModel> GetStudents()
 		{
-			using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(StudentModel.CnnVal("Students")))
+			using (IDbConnection connection = new System.Data.SqlClient.SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=StudentData;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
 			{
 				var output = connection.Query<StudentModel>("select * from Students").ToList();
 				return output;
@@ -68,13 +75,15 @@ namespace Wisej.Architecture.MVC
 			// if the data in the model is valid, add the student to the database
 			if (message == validMessage)
 			{
+				//TEST CODE- print the connection string
+				AlertBox.Show(StudentModel.CnnVal("Students"));
+
+				//get the file path of our database
+				string jsonDatabaseFilePath = StudentModel.CnnVal("Students");
 
 				//add the data to the database
-				using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(StudentModel.CnnVal("Students")))
-				{
-					connection.Execute("INSERT INTO Students VALUES (@Id, @Email, @Name, @Age)", this);
-					//note: The order and exact case-sensitive text of the values @Id, @Email, @Name, @Age MUST match the database
-				}
+				UpdateJsonFile(jsonDatabaseFilePath, this);
+
 			}
 			// If the data is not valid, add a bit to the message informing the user that the student was not added to the database.
             else
@@ -83,6 +92,27 @@ namespace Wisej.Architecture.MVC
             }
 
             return message;
+		}
+
+		// Adds a new StudentModel object, in JSON format, to the given JSON file.
+		// the JSON file must contain at least 1 StudentModel object
+		private void UpdateJsonFile(string jsonFilePath, StudentModel newStudent)
+		{
+			// Read the existing JSON file content
+			string existingJson = File.ReadAllText(jsonFilePath);
+
+			// Deserialize the existing JSON into a list of StudentModel objects
+			// NOTE: This line causes an error if the file is empty or does not contain at least 1 StudentModel object
+			List<StudentModel> students = JsonConvert.DeserializeObject<List<StudentModel>>(existingJson);
+
+			// Add the new StudentModel object to the list
+			students.Add(newStudent);
+
+			// Serialize the updated list of StudentModel objects to JSON
+			string updatedJson = JsonConvert.SerializeObject(students, Formatting.Indented);
+
+			// Overwrite the existing JSON file with the updated JSON
+			File.WriteAllText(jsonFilePath, updatedJson);
 		}
 	}
 }
