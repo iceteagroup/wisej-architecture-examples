@@ -57,11 +57,16 @@ namespace Wisej.Architecture.MVC
 		// returns a list of StudentModel objects from the database
 		public static List<StudentModel> GetStudents()
 		{
-			using (IDbConnection connection = new System.Data.SqlClient.SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=StudentData;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
-			{
-				var output = connection.Query<StudentModel>("select * from Students").ToList();
-				return output;
-			}
+			//read the file path of our database from the Web.config file
+			string jsonDatabaseFilePath = StudentModel.CnnVal("Students");
+
+			// Read the JSON file content
+			string json = File.ReadAllText(jsonDatabaseFilePath);
+
+			// Deserialize the JSON into a List<StudentModel>
+			List<StudentModel> students = JsonConvert.DeserializeObject<List<StudentModel>>(json);
+
+			return students;
 		}
 
 		// Adds the model to the database. Returns a string which contains an error message if the model is invalid.
@@ -75,10 +80,7 @@ namespace Wisej.Architecture.MVC
 			// if the data in the model is valid, add the student to the database
 			if (message == validMessage)
 			{
-				//TEST CODE- print the connection string
-				AlertBox.Show(StudentModel.CnnVal("Students"));
-
-				//get the file path of our database
+				//read the file path of our database from the Web.config file
 				string jsonDatabaseFilePath = StudentModel.CnnVal("Students");
 
 				//add the data to the database
