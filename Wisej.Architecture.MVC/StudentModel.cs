@@ -51,7 +51,12 @@ namespace Wisej.Architecture.MVC
 		// Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=StudentData;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
 		public static string CnnVal(string name)
 		{
-			return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+			// code for if you are looking for a value in the Web.config file
+			// return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+
+			// name parameter is unused, always returns same json file
+			return "database.json";
+
 		}
 
 		// returns a list of StudentModel objects from the database
