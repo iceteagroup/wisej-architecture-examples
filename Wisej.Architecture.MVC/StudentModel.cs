@@ -39,7 +39,18 @@ namespace Wisej.Architecture.MVC
 			}
 			else
 			{
-				message = validmessage;
+				//check to make sure the ID does not match the ID of a student already in the database
+				List<StudentModel> studentList = GetStudents();
+				bool idAlreadyInDatabase = studentList.Any(p => p.Id == model.Id);
+				if(idAlreadyInDatabase)
+				{
+					message += "That ID cannot be used, as there is already a student with that ID in the database. \n";
+				}
+				else
+				{
+					message = validmessage;
+				}
+				
 			}
 			return message;
 
