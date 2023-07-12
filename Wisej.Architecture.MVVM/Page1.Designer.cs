@@ -52,6 +52,7 @@
 			this.button1.Size = new System.Drawing.Size(146, 37);
 			this.button1.TabIndex = 1;
 			this.button1.Text = "Add Student";
+			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// label1
 			// 
@@ -108,7 +109,7 @@
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.dataGridView1);
 			this.Name = "Page1";
-			this.Size = new System.Drawing.Size(1123, 497);
+			this.Size = new System.Drawing.Size(1093, 540);
 			this.Load += new System.EventHandler(this.Page1_Load);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.ResumeLayout(false);

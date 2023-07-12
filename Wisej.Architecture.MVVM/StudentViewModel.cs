@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace Wisej.Architecture.MVVM
 {
@@ -9,6 +11,14 @@ namespace Wisej.Architecture.MVVM
 		{
 			//studentdata = new List<StudentModel>();
 			studentdata = StudentModel.GetStudents();
+		}
+		public string AddStudentToDatabase(string name, int id, int age, string email)
+		{
+			// create a StudentModel based on the data in the text fields.
+			StudentModel model = new StudentModel() { Name = name, Id = id, Age = age, Email = email };
+			// Attempt to add the student to the database- returns a sucess or failure message.
+			string message = model.AddStudent();
+			return message;
 		}
 	}
 }
