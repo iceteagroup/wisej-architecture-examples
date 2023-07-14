@@ -35,6 +35,7 @@
 			this.txtEmail = new Wisej.Web.TextBox();
 			this.txtName = new Wisej.Web.TextBox();
 			this.txtAge = new Wisej.Web.TextBox();
+			this.button2 = new Wisej.Web.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -52,14 +53,13 @@
 			this.button1.Size = new System.Drawing.Size(146, 37);
 			this.button1.TabIndex = 1;
 			this.button1.Text = "Add Student";
-			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(324, 25);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(129, 15);
+			this.label1.Size = new System.Drawing.Size(129, 18);
 			this.label1.TabIndex = 2;
 			this.label1.Text = "Student Management";
 			// 
@@ -69,7 +69,7 @@
 			this.txtId.LabelText = "Id";
 			this.txtId.Location = new System.Drawing.Point(740, 53);
 			this.txtId.Name = "txtId";
-			this.txtId.Size = new System.Drawing.Size(149, 42);
+			this.txtId.Size = new System.Drawing.Size(149, 53);
 			this.txtId.TabIndex = 3;
 			// 
 			// txtEmail
@@ -77,7 +77,7 @@
 			this.txtEmail.LabelText = "Email";
 			this.txtEmail.Location = new System.Drawing.Point(740, 112);
 			this.txtEmail.Name = "txtEmail";
-			this.txtEmail.Size = new System.Drawing.Size(146, 42);
+			this.txtEmail.Size = new System.Drawing.Size(146, 53);
 			this.txtEmail.TabIndex = 4;
 			// 
 			// txtName
@@ -85,7 +85,7 @@
 			this.txtName.LabelText = "Name";
 			this.txtName.Location = new System.Drawing.Point(740, 171);
 			this.txtName.Name = "txtName";
-			this.txtName.Size = new System.Drawing.Size(146, 42);
+			this.txtName.Size = new System.Drawing.Size(146, 53);
 			this.txtName.TabIndex = 5;
 			// 
 			// txtAge
@@ -94,13 +94,22 @@
 			this.txtAge.LabelText = "Age";
 			this.txtAge.Location = new System.Drawing.Point(740, 230);
 			this.txtAge.Name = "txtAge";
-			this.txtAge.Size = new System.Drawing.Size(149, 42);
+			this.txtAge.Size = new System.Drawing.Size(149, 53);
 			this.txtAge.TabIndex = 6;
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(929, 70);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(146, 37);
+			this.button2.TabIndex = 7;
+			this.button2.Text = "Clear Fields";
 			// 
 			// Page1
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 19F);
 			this.AutoScaleMode = Wisej.Web.AutoScaleMode.Font;
+			this.Controls.Add(this.button2);
 			this.Controls.Add(this.txtAge);
 			this.Controls.Add(this.txtName);
 			this.Controls.Add(this.txtEmail);
@@ -109,8 +118,7 @@
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.dataGridView1);
 			this.Name = "Page1";
-			this.Size = new System.Drawing.Size(1093, 540);
-			this.Load += new System.EventHandler(this.Page1_Load);
+			this.Size = new System.Drawing.Size(2380, 981);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -126,6 +134,7 @@
 		private Wisej.Web.TextBox txtEmail;
 		private Wisej.Web.TextBox txtName;
 		private Wisej.Web.TextBox txtAge;
+		private Web.Button button2;
 	}
 }
 

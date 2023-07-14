@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using Newtonsoft.Json;
 using System.Linq;
+using Microsoft.Ajax.Utilities;
 
 namespace Wisej.Architecture.MVVM
 {
@@ -83,7 +84,7 @@ namespace Wisej.Architecture.MVVM
 		}
 
 		// Adds the model to the database. Returns a string which contains an error message if the model is invalid.
-		public string AddStudent()
+		public bool AddStudent()
 		{
 			string validMessage = "Added new student to the database.";
 
@@ -104,9 +105,12 @@ namespace Wisej.Architecture.MVVM
 			else
 			{
 				message += " New student was not added to database.";
+                Web.MessageBox.Show(message);
+
+				return false;
 			}
 
-			return message;
+			return true;
 		}
 
 		// Adds a new StudentModel object, in JSON format, to the given JSON file.

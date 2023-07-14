@@ -10,7 +10,8 @@ namespace Wisej.Architecture.MVVM
 		/// </summary>
 		static void Main()
 		{
-			Application.MainPage = new Page1();
+			//Application.MainPage = new Page1();
+			new StudentViewModel(new Page1());
 		}
 
 		//
