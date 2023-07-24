@@ -55,25 +55,11 @@ namespace Wisej.Architecture.MVC
 
 		}
 
-		// Looks up the database connection string. The database connection string is stored in Web.config.
-		// In this case, the database connection string is just a the name of a JSON file.
-		// If the database was a SQL server instead os a JSON file, the database connection string would look something like this:
-		// Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=StudentData;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
-		public static string CnnVal(string name)
-		{
-			// code for if you are looking for a value in the Web.config file
-			// return ConfigurationManager.ConnectionStrings[name].ConnectionString;
-
-			// name parameter is unused, always returns same json file
-			return "database.json";
-
-		}
-
 		// returns a list of StudentModel objects from the database
 		public static List<StudentModel> GetStudents()
 		{
 			//read the file path of our database from the Web.config file
-			string jsonDatabaseFilePath = StudentModel.CnnVal("Students");
+			string jsonDatabaseFilePath = "database.json";
 
 			// Read the JSON file content
 			string json = File.ReadAllText(jsonDatabaseFilePath);
@@ -95,8 +81,7 @@ namespace Wisej.Architecture.MVC
 			// if the data in the model is valid, add the student to the database
 			if (message == validMessage)
 			{
-				//read the file path of our database from the Web.config file
-				string jsonDatabaseFilePath = StudentModel.CnnVal("Students");
+				string jsonDatabaseFilePath = "database.json";
 
 				//add the data to the database
 				UpdateJsonFile(jsonDatabaseFilePath, this);
