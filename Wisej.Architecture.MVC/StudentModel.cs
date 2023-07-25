@@ -58,7 +58,6 @@ namespace Wisej.Architecture.MVC
 		// returns a list of StudentModel objects from the database
 		public static List<StudentModel> GetStudents()
 		{
-			//read the file path of our database from the Web.config file
 			string jsonDatabaseFilePath = "database.json";
 
 			// Read the JSON file content
